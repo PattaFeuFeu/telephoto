@@ -2,6 +2,7 @@ package me.saket.telephoto.sample.gallery
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.io.File
 
 @Parcelize
 data class MediaAlbum(
@@ -19,5 +20,13 @@ sealed interface MediaItem : Parcelable {
     override val placeholderImageUrl: String,
     override val caption: String,
     override val aspectRatio: Float,
+  ) : MediaItem
+
+  @Parcelize
+  data class LocalImage(
+    val file: File,
+    override val caption: String = "Fetch me if you can",
+    override val placeholderImageUrl: String = "",
+    override val aspectRatio: Float = 1f
   ) : MediaItem
 }

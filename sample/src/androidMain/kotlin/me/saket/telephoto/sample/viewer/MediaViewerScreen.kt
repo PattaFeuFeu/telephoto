@@ -194,7 +194,7 @@ private fun SharedElementTransitionScope.MediaPage(
     modifier = modifier.background(backgroundColorFor(flickState.gestureState)),
   ) {
     when (model) {
-      is MediaItem.Image -> {
+      is MediaItem.Image, is MediaItem.LocalImage -> {
         // TODO: handle errors here.
         val imageState = rememberZoomableImageState(zoomableState)
         ZoomableAsyncImage(
