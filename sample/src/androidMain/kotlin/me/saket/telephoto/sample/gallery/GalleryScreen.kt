@@ -111,7 +111,7 @@ private fun AlbumGrid(
                 boundsTransform = { _, _ -> sharedElementTransitionSpring<Rect>() },
               ),
             model = ImageRequest.Builder(LocalContext.current)
-              .data(item.placeholderImageUrl)
+              .data(if (item is MediaItem.Image) item.placeholderImageUrl else item)
               .memoryCacheKey(item.placeholderImageUrl)
               .crossfade(300)
               .build(),

@@ -20,6 +20,7 @@ import coil.ImageLoader
 import coil.decode.ImageDecoderDecoder
 import me.saket.telephoto.sample.gallery.MediaAlbum
 import me.saket.telephoto.sample.gallery.MediaItem
+import java.io.File
 import java.util.concurrent.Executor
 
 class SampleActivity : AppCompatActivity() {
@@ -40,6 +41,9 @@ class SampleActivity : AppCompatActivity() {
 
     val album = MediaAlbum(
       items = listOf(
+        MediaItem.LocalImage(
+          file = File(filesDir, "example.jpg")
+        ),
         // Photo by Mahyar Motebassem (https://unsplash.com/photos/f0d83M-PkNw).
         MediaItem.Image(
           fullSizedUrl = "https://unsplash.com/photos/f0d83M-PkNw/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzQ3ODMzODU2fA&force=true",
