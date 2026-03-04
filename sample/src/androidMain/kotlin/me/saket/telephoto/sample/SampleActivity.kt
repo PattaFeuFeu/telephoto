@@ -86,7 +86,7 @@ class SampleActivity : AppCompatActivity() {
     StrictMode.setThreadPolicy(
       StrictMode.ThreadPolicy.Builder()
         .detectAll()
-        .penaltyDeath()
+        .penaltyLog()
         .build()
     )
     StrictMode.setVmPolicy(
