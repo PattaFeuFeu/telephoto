@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.slack.circuit.runtime.Navigator
@@ -45,6 +46,7 @@ import me.saket.telephoto.zoomable.zoomablePeekOverlay
 internal fun GalleryScreen(
   key: GalleryScreenKey,
   navigator: Navigator,
+  imageLoader: ImageLoader,
 ) {
   Scaffold(
     topBar = {
@@ -56,6 +58,7 @@ internal fun GalleryScreen(
       album = key.album,
       navigator = navigator,
       contentPadding = contentPadding,
+      imageLoader = imageLoader
     )
   }
 }
@@ -66,6 +69,7 @@ private fun AlbumGrid(
   album: MediaAlbum,
   navigator: Navigator,
   contentPadding: PaddingValues,
+  imageLoader: ImageLoader,
   modifier: Modifier = Modifier,
 ) {
   SharedElementTransitionScope {
@@ -111,6 +115,7 @@ private fun AlbumGrid(
               .memoryCacheKey(item.placeholderImageUrl)
               .crossfade(300)
               .build(),
+            imageLoader = imageLoader,
             contentDescription = item.caption,
             contentScale = ContentScale.Crop,
           )

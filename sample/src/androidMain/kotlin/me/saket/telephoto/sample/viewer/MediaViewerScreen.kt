@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.request.ImageRequest
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
@@ -68,6 +69,7 @@ import me.saket.telephoto.zoomable.rememberZoomableState
 internal fun MediaViewerScreen(
   key: MediaViewerScreenKey,
   navigator: Navigator,
+  imageLoader: ImageLoader,
 ) {
   SharedElementTransitionScope {
     val sharedElementKey = key.album.items[key.initialIndex]
@@ -102,6 +104,7 @@ internal fun MediaViewerScreen(
           modifier = Modifier.fillMaxSize(),
           model = key.album.items[pageNum],
           isActivePage = pagerState.settledPage == pageNum,
+          imageLoader = imageLoader
         )
       }
 
@@ -178,6 +181,7 @@ private fun titleBarIconButtonColors() = IconButtonDefaults.iconButtonColors(
 private fun SharedElementTransitionScope.MediaPage(
   model: MediaItem,
   isActivePage: Boolean,
+  imageLoader: ImageLoader,
   modifier: Modifier = Modifier,
 ) {
   val zoomableState = rememberZoomableState()
@@ -213,8 +217,12 @@ private fun SharedElementTransitionScope.MediaPage(
             .fillMaxSize()
             .focusRequester(focusRequester),
           state = imageState,
+          imageLoader = imageLoader,
           model = ImageRequest.Builder(LocalContext.current)
-            .data(model.fullSizedUrl)
+            // Not subsampling:
+            .data(model)
+            // Subsampling:
+            //.data((model as MediaItem.LocalImage).file)
             .placeholderMemoryCacheKey(model.placeholderImageUrl)
             .crossfade(300)
             .build(),

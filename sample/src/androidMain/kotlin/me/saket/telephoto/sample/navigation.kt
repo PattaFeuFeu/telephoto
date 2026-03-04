@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.NavigableCircuitContent
@@ -31,6 +32,8 @@ internal fun Navigation(
   val backstack = rememberSaveableBackStack(initialScreenKey)
   val navigator = rememberCircuitNavigator(backstack)
 
+  val imageLoader = getImageLoader(LocalContext.current.applicationContext)
+
   val circuit = remember {
     val uiFactory = Ui.Factory { screen, _ ->
       object : Ui<CircuitUiState> {
@@ -41,12 +44,14 @@ internal fun Navigation(
               GalleryScreen(
                 key = screen,
                 navigator = navigator,
+                imageLoader = imageLoader
               )
             }
             is MediaViewerScreenKey -> {
               MediaViewerScreen(
                 key = screen,
                 navigator = navigator,
+                imageLoader = imageLoader
               )
             }
             is CropImageScreenKey -> {
